@@ -36,28 +36,27 @@
   </div>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" v-if="!isLoading">
+    <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">How Many People</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Enter a number of how many people you want to add to the list.</label>
-            <input type="number" class="form-control" v-model="count" id="exampleFormControlInput1" placeholder="20" min="20" max="100">
+        <div v-if="!isLoaded">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="exampleModalLabel">How Many People</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Enter a number of how many people you want to add to the list.</label>
+              <input type="number" class="form-control" v-model="count" id="exampleFormControlInput1" placeholder="20" :min="20" :max="100">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-warning" @click="generateData()">Start</button>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning" @click="generateData()">Start</button>
-        </div>
-        <div class="spinner-border text-warning" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="alert alert-success" role="alert" v-if="isLoaded">
-          <h3>Successfully Generated {{count}} Peoples</h3>
-        </div>
+      </div>
+      <div class="alert alert-success" role="alert" v-if="isLoaded">
+        <h3>Successfully Generated {{count}} Peoples</h3>
       </div>
     </div>
   </div>
@@ -123,12 +122,14 @@ export default {
         }
         this.dataList.push(item);
         // console.log(item);
-        this.isLoaded = this.count === i
       }
 
       console.log(JSON.parse(JSON.stringify(this.dataList)));
       this.isLoading = false;
-      // this.isLoaded = true;
+      this.isLoaded = true;
+      setTimeout(() => {
+        this.isLoaded = false;
+      }, 3000);
       return JSON.parse(JSON.stringify(this.dataList))
     }
   },
@@ -146,5 +147,11 @@ export default {
   /* text-align: center; */
   color: #2c3e50;
   margin: 60px;
+}
+button.btn-default {
+  background: lightgray;
+}
+button.btn-warning {
+  color: #ffffff;
 }
 </style>
