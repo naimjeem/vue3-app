@@ -2,14 +2,19 @@
   <div class="container m-6">
     <div class="row justify-content-between">
         <div class="col-4">
-          <h2>Sorting traing system</h2>
+          <h2>Sorting Traning System</h2>
         </div>
         <div class="col-4">
           <button class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">Start Sorting</button>
         </div>
     </div>
-    <div>
-      <table class="table table-bordered">
+    <div class="card p-6">
+      <div class="row justify-content-end">
+        <div class="col-6">
+          <strong class="float-end">{{dataList.length}} people in the list </strong>
+        </div>
+      </div>
+      <table class="table">
         <thead>
           <tr>
             <th>Email</th>
@@ -21,10 +26,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in dataList" :key="item.index">
+          <tr class="py-6" v-for="item in dataList" :key="item.index">
             <td>{{item.email}}</td>
             <td>{{item.count}}</td>
-            <td>{{item.tags}}</td>
+            <td><span class="chips">{{item.tags}}</span></td>
             <td>{{item.fullName}}</td>
             <td>{{item.location}}</td>
             <td>{{item.date}}</td>
@@ -68,6 +73,7 @@ import faker from 'faker'
 export default {
   data: () => {
     return {
+      total: 20,
       count: '20',
       dataList: [],
       isLoading: false,
@@ -94,8 +100,6 @@ export default {
             date
         }
         this.dataList.push(item);
-        // console.log(item);
-        this.isLoaded = this.count === i
       }
 
       console.log(JSON.parse(JSON.stringify(this.dataList)));
@@ -135,7 +139,7 @@ export default {
   },
   mounted() {
     this.init();
-  }
+  },
 }
 </script>
 
@@ -148,10 +152,35 @@ export default {
   color: #2c3e50;
   margin: 60px;
 }
+.card {
+  padding: 20px;
+}
 button.btn-default {
   background: lightgray;
 }
 button.btn-warning {
-  color: #ffffff;
+  color: #eeeeee;
+}
+table {
+  font-size: 14px;
+
+}
+th {
+  color: #555555;
+}
+/* tr {
+  padding: 20px 10px;
+} */
+td {
+  padding-top:20px;
+  padding-bottom:20px;
+  padding-right:20px;
+}
+
+.chips {
+  background: #eeeeee;
+  color: #555555;
+  padding: 10px;
+  border-radius: 16px;
 }
 </style>
