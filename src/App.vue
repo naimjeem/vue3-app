@@ -25,16 +25,25 @@
             <th>Date</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="py-6" v-for="item in dataList" :key="item.index">
-            <td>{{item.email}}</td>
-            <td>{{item.count}}</td>
-            <td><span class="chips">{{item.tags}}</span></td>
-            <td>{{item.fullName}}</td>
-            <td>{{item.location}}</td>
-            <td>{{item.date}}</td>
-          </tr>
-        </tbody>
+        <!-- <tbody> -->
+          <draggable class="" :list="dataList" tag="tbody">
+            <tr class="py-6" style="cursor: move; padding: 20px 10px" v-for="item in dataList" :key="item.index" draggable="true">
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    {{item.email}}
+                  </label>
+                </div>
+              </td>
+              <td>{{item.count}}</td>
+              <td><span class="chips">{{item.tags}}</span></td>
+              <td>{{item.fullName}}</td>
+              <td>{{item.location}}</td>
+              <td>{{item.date}}</td>
+            </tr>
+          </draggable>
+        <!-- </tbody> -->
       </table>
 
     </div>
@@ -69,8 +78,12 @@
 
 <script>
 import faker from 'faker'
+import { VueDraggableNext } from 'vue-draggable-next'
 
 export default {
+  components: {
+    draggable: VueDraggableNext,
+  },
   data: () => {
     return {
       total: 20,
@@ -168,9 +181,12 @@ table {
 th {
   color: #555555;
 }
-/* tr {
-  padding: 20px 10px;
-} */
+tbody.tr:hover {
+  cursor: move;
+}
+tr {
+  padding: 20px 10px !important;
+}
 td {
   padding-top:20px;
   padding-bottom:20px;
@@ -182,5 +198,10 @@ td {
   color: #555555;
   padding: 10px;
   border-radius: 16px;
+  margin: 20px 0;
+}
+.form-check-input:checked {
+  background-color: #FF8D00 !important;
+  border-color: #FF8D00 !important;
 }
 </style>
